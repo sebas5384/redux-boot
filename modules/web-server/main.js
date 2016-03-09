@@ -9,12 +9,6 @@ export default {
 
     switch (action.type) {
 
-      case ChokoActionTypes.BOOT:
-        return {
-          ...state,
-          testando: 'HEYY PEPE :)'
-        }
-
       case HTTP_REQUEST:
         return {
           ...state,
