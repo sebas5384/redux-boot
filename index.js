@@ -1,31 +1,13 @@
 import {createStore, applyMiddleware} from 'redux'
 
+import combineReducers from './lib/combine-reducers'
+
 // Import Choko Core modules.
 import WebServerModule from './modules/web-server/main'
 
-// 
+//
 // REDUX APP.
-// 
-
-const combineReducers = (reducers) => {
-  return (currentState, action) => {
-    const state = reducers
-      .reduce((prevState, reducer) => {
-        
-        // First reducer is given as prevState.
-        if (typeof prevState == 'function') {
-          const firstReducer = prevState;
-          prevState = firstReducer(currentState, action);
-        }
-
-        return reducer(prevState, action)
-      })
-
-    console.log('<<=== STATE TRANSITIONS', state)
-
-    return state
-  }
-}
+//
 
 export const ActionTypes = {
   BOOT: 'choko/core/BOOT'
@@ -34,9 +16,9 @@ export const ActionTypes = {
 // CREATOR OF CHOKO APP.
 export default function ChokoApp(initialState = {}, initialModules = []) {
 
-  // 
+  //
   // MODULES.
-  // 
+  //
 
   let modules = [
     // Core modules.
