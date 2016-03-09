@@ -22,9 +22,9 @@ export default {
     return dispatch => action => {
 
       if (action.type == ChokoActionTypes.BOOT) {
-        let returnValue;
+        let returnValue
 
-        // 
+        //
         // WEB SERVER.
         //
 
