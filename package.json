@@ -5,10 +5,10 @@
   "main": "es6.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node es6.js"
+    "example": "node examples/es6.js"
   },
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
     "babel-polyfill": "^6.7.2",
     "babel-preset-es2015": "^6.3.13",

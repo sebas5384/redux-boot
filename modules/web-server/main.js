@@ -1,40 +1,33 @@
 import express from 'express'
 import {handleActions} from 'redux-actions'
-// @TODO: REMOVE THIS !!
-// import {BOOT} from '../../index'
-import {BOOT as CHOKO_BOOT} from '../custom-router/main'
+import {BOOT} from '../../lib/bootstrap'
 
 export const HTTP_REQUEST = 'choko/core/web-server/HTTP_REQUEST'
 export const HTTP_BOOT = 'choko/core/web-server/HTTP_BOOT'
 
 const reducers = {
-  [CHOKO_BOOT]: (state, action) => {
+  [BOOT]: (state, action) => {
     return {
       ...state,
-      response: 'FUNNNNN FUN FUN'
+      response: 'FUM'
     }
   }
 }
 
-
 export default {
-  reducer: handleActions(reducers),
+  reducer: reducers,
+
   middleware({getState}) {
     return dispatch => action => {
+      if (action.type == BOOT) {
 
-      if (action.type == CHOKO_BOOT) {
-
-        //
-        // WEB SERVER.
-        //
-
+        // Create webserver.
         let httpServer = express()
 
         // Dispatch Http server Boot action.
         dispatch(httpBoot({httpServer}))
 
         httpServer.use((request, response, next) => {
-          
           // Dispatch Http Request Action.
           dispatch(httpRequest({request, response}))
 
