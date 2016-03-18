@@ -30,7 +30,7 @@ export default {
   middleware({getState}) {
     return dispatch => (action) => {
       if (action.type == HTTP_REQUEST && action.payload.request.originalUrl == '/routes') {
-        return dispatch(await loadRoutesFile('modules/custom-router/routes.yml'))
+        return dispatch(loadRoutesFile('modules/custom-router/routes.yml'))
       }
       else {
         return dispatch(action)
