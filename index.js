@@ -1,10 +1,12 @@
 import {createStore, applyMiddleware} from 'redux'
 import {createAction} from 'redux-actions'
 
+import combineReducers from './lib/combine-reducers'
+
 // Import Choko Core modules.
 import WebServerModule from './modules/web-server/main'
 
-// 
+//
 // REDUX APP.
 // 
 
@@ -24,9 +26,9 @@ export const BOOT = 'choko/core/BOOT'
 // CREATOR OF CHOKO APP.
 export default function ChokoApp(initialState = {}, initialModules = []) {
 
-  // 
+  //
   // MODULES.
-  // 
+  //
 
   let modules = [
     // Core modules.

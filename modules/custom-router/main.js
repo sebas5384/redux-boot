@@ -11,14 +11,24 @@ export default {
 
     switch (action.type) {
       case ChokoActionTypes.BOOT:
-        console.log('custom-router');
-        return state
+        return {
+          ...state,
+          testando: 'HEYY PEPE :)'
+        }
+
+      case HTTP_REQUEST:
+        const request = action.payload.request
+        return {
+          ...state,
+          response: 'Uhuuu!!!! this is the custom router!! ' + request.originalUrl
+        }
+
       default:
         return state
     }
   },
   middleware({getState}) {
-    return dispatch => async (action) => {
+    return dispatch => (action) => {
       if (action.type == HTTP_REQUEST && action.payload.request.originalUrl == '/routes') {
         return dispatch(await loadRoutesFile('modules/custom-router/routes.yml'))
       }
@@ -40,16 +50,15 @@ export default {
 //   }
 // })
 
-export async function loadRoutesFile(path) {
-  const fileContent = await readFileAsync(path)
-  return {
-    type: HTTP_REQUEST_CHANGE,
-    payload: {
-      content: fileContent
-    }
-  }
-}
-
+// export async function loadRoutesFile(path) {
+//   const fileContent = await readFileAsync(path)
+//   return {
+//     type: HTTP_REQUEST_CHANGE,
+//     payload: {
+//       content: fileContent
+//     }
+//   }
+// }
 
 function readFileAsync(path) {
   return new Promise((resolve, reject) => {

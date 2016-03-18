@@ -7,7 +7,6 @@ import {BOOT as CHOKO_BOOT} from '../custom-router/main'
 export const HTTP_REQUEST = 'choko/core/web-server/HTTP_REQUEST'
 export const HTTP_BOOT = 'choko/core/web-server/HTTP_BOOT'
 
-
 const reducers = {
   [CHOKO_BOOT]: (state, action) => {
     return {
@@ -25,7 +24,7 @@ export default {
 
       if (action.type == CHOKO_BOOT) {
 
-        // 
+        //
         // WEB SERVER.
         //
 
