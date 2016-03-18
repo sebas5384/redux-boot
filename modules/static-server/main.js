@@ -1,5 +1,6 @@
 import express from 'express'
 
+import {ActionTypes as ChokoActionTypes} from '../../index'
 import { HTTP_BOOT } from '../web-server/main'
 
 export default {

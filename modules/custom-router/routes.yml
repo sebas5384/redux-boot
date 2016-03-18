@@ -1,0 +1,6 @@
+- title: About Us
+  machine_name: about-us
+  path: about-us
+- title: Portfolio
+  machine_name: portfolio
+  path: portfolio

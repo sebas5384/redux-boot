@@ -1,5 +1,9 @@
 require('babel-register')({
-  'presets': ['es2015', 'babel-preset-stage-0']
+  'presets': [
+    'babel-polyfill',
+    'es2015',
+    'babel-preset-stage-0'
+  ]
 });
 
 require('./index.js');

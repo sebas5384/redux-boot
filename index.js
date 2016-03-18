@@ -1,4 +1,5 @@
 import {createStore, applyMiddleware} from 'redux'
+import {createAction} from 'redux-actions'
 
 // Import Choko Core modules.
 import WebServerModule from './modules/web-server/main'
@@ -9,27 +10,16 @@ import WebServerModule from './modules/web-server/main'
 
 const combineReducers = (reducers) => {
   return (currentState, action) => {
-    const state = reducers
-      .reduce((prevState, reducer) => {
-        
-        // First reducer is given as prevState.
-        if (typeof prevState == 'function') {
-          const firstReducer = prevState;
-          prevState = firstReducer(currentState, action);
-        }
-
-        return reducer(prevState, action)
-      })
-
-    console.log('<<=== STATE TRANSITIONS', state)
+    const state = reducers.reduce(
+      (prevState, reducer) => reducer(prevState, action),
+      currentState
+    )
 
     return state
   }
 }
 
-export const ActionTypes = {
-  BOOT: 'choko/core/BOOT'
-}
+export const BOOT = 'choko/core/BOOT'
 
 // CREATOR OF CHOKO APP.
 export default function ChokoApp(initialState = {}, initialModules = []) {
@@ -55,8 +45,13 @@ export default function ChokoApp(initialState = {}, initialModules = []) {
   const rootReducer = combineReducers(reducersFromModules)
 
   let store = createStore(rootReducer, initialState, applyMiddleware(...middlewaresFromModules))
+  let syncDispatcher = store.dispatch
+  
+  store.dispatch = (...theArgs) => {
+    return syncDispatcher(...theArgs)
+  }
 
-  store.dispatch({type: ActionTypes.BOOT})
+  store.dispatch({type: BOOT})
 
   return {
     store
@@ -74,8 +69,8 @@ export default function ChokoApp(initialState = {}, initialModules = []) {
 // Custom modules.
 // import reactRouterReducer from 'choko-react-router'
 import ReactRouterModule from './modules/react-router/main'
-import CustomRouterModule from './modules/custom-router/main'
 import StaticServerModule from './modules/static-server/main'
+import CustomRouterModule from './modules/custom-router/main'
 
 const initialState = {
   variables: {
@@ -83,10 +78,12 @@ const initialState = {
   }
 }
 
+
+// @TODO: Calculate dependency order by its package.json.
 const enabledModules = [
-  ReactRouterModule,
-  CustomRouterModule,
-  StaticServerModule
+  // ReactRouterModule,
+  // CustomRouterModule,
+  // StaticServerModule
 ]
 
 const chokoApp = ChokoApp(initialState, enabledModules)
