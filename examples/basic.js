@@ -30,5 +30,5 @@ const chokoApp = Choko(initialState, enabledModules)
 
 // @TODO:
 // 1. Immutable-js
-// 2. Async
-// 3. redux-router
+// 2. Async - DONE :)
+// 3. Rules

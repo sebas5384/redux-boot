@@ -24,6 +24,8 @@ export default {
       if (action.type == HTTP_REQUEST && action.payload.request.originalUrl == '/routes') {
         const loadAction = loadRoutesFile('modules/custom-router/routes.yml')
         const loaded = await dispatch(loadAction)
+
+        action.payload.response.send(loaded.payload)
       }
 
       return next(action)
