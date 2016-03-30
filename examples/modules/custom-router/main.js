@@ -1,64 +1,42 @@
 import fs from 'fs'
-import { HTTP_REQUEST, HTTP_BOOT } from '../web-server/main'
-import {ActionTypes as ChokoActionTypes} from '../../index'
+import { HTTP_REQUEST, HTTP_BOOT } from '../../../modules/web-server/main'
+import {createAction} from 'redux-actions'
 
 export const HTTP_REQUEST_CHANGE = 'custom-router/routes/file/LOADED'
 
 export const BOOT = 'choko/core/BOOT'
 
-export default {
-  reducer(state, action) {
 
-    switch (action.type) {
-      case ChokoActionTypes.BOOT:
-        return {
-          ...state,
-          testando: 'HEYY PEPE :)'
-        }
-
-      case HTTP_REQUEST:
-        const request = action.payload.request
-        return {
-          ...state,
-          response: 'Uhuuu!!!! this is the custom router!! ' + request.originalUrl
-        }
-
-      default:
-        return state
-    }
-  },
-  middleware({getState}) {
-    return dispatch => (action) => {
-      if (action.type == HTTP_REQUEST && action.payload.request.originalUrl == '/routes') {
-        return dispatch(loadRoutesFile('modules/custom-router/routes.yml'))
-      }
-      else {
-        return dispatch(action)
-      }
+const handlers = {
+  [HTTP_REQUEST_CHANGE]: (state, action) => {
+    return {
+      ...state,
+      response: action.payload
     }
   }
 }
 
+export default {
+  reducer: handlers,
+  middleware({getState, dispatch}) {
+    return next => async (action) => {
 
-// export const loadRoutesFile = createAction(HTTP_REQUEST_CHANGE, async (path) => {
-//   const fileContent = await readFileAsync(path)
-//   return {
-//     type: HTTP_REQUEST_CHANGE,
-//     payload: {
-//       content: fileContent
-//     }
-//   }
-// })
+      if (action.type == HTTP_REQUEST && action.payload.request.originalUrl == '/routes') {
+        const loadAction = loadRoutesFile('modules/custom-router/routes.yml')
+        const loaded = await dispatch(loadAction)
+      }
 
-// export async function loadRoutesFile(path) {
-//   const fileContent = await readFileAsync(path)
-//   return {
-//     type: HTTP_REQUEST_CHANGE,
-//     payload: {
-//       content: fileContent
-//     }
-//   }
-// }
+      return next(action)
+    }
+  }
+}
+
+export const loadRoutesFile = createAction(HTTP_REQUEST_CHANGE, async (path) => {
+  const fileContent = await readFileAsync(path)
+  return {
+    content: fileContent
+  }
+})
 
 function readFileAsync(path) {
   return new Promise((resolve, reject) => {

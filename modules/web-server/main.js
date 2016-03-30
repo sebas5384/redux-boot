@@ -17,8 +17,8 @@ const reducers = {
 export default {
   reducer: reducers,
 
-  middleware({getState}) {
-    return dispatch => action => {
+  middleware({getState, dispatch}) {
+    return next => action => {
       if (action.type == BOOT) {
 
         // Create webserver.
@@ -27,21 +27,23 @@ export default {
         // Dispatch Http server Boot action.
         dispatch(httpBoot({httpServer}))
 
-        httpServer.use((request, response, next) => {
+        httpServer.use((request, response, nextHttp) => {
+
           // Dispatch Http Request Action.
-          dispatch(httpRequest({request, response}))
+          dispatch(httpRequest({request, response})).then(() => {
+            response.send(getState().response)
+            nextHttp()
+            console.log('\n===> FINAL STATE\n', getState())
+          })
 
-          console.log('\n===> FINAL STATE\n', getState().response)
-
-          response.send(getState().response)
-
-          next()
         })
 
         httpServer.listen(3000)
 
-        return dispatch(action)
       }
+
+      // Custom router middleware.
+      return next(action)
     }
   }
 }

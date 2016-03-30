@@ -6,6 +6,7 @@ import Choko from '../index'
 import path from 'path'
 
 // Modules.
+import CustomRouter from './modules/custom-router/main'
 import WebServerModule from '../modules/web-server/main'
 import StaticServerModule from '../modules/static-server/main'
 
@@ -21,6 +22,7 @@ const initialState = {
 // @TODO: Calculate dependency order by its package.json.
 const enabledModules = [
   WebServerModule,
+  CustomRouter,
   StaticServerModule
 ]
 
