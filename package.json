@@ -2,22 +2,20 @@
   "name": "choko-redux",
   "version": "1.0.0",
   "description": "",
-  "main": "es6.js",
+  "main": "dist/index.js",
   "scripts": {
-    "test": "tape -r babel-register tests/**/*.test.js | tap-spec",
-    "example": "node examples/es6.js"
+    "build": "rm -f build/index.js* && webpack",
+    "pretest": "rm -f build/test.js* && webpack --config ./webpack.config.test.js",
+    "test": "tape build/test.js",
+    "test-dev": "npm run pretest && tape ./build/test.js | tap-spec",
+    "prepublish": "npm run build"
+  },
+  "directories": {
+    "lib": "src/lib"
   },
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "babel-polyfill": "^6.7.2",
-    "babel-preset-es2015": "^6.3.13",
-    "babel-preset-stage-0": "^6.5.0",
-    "babel-register": "^6.4.3",
-    "express": "^4.13.4",
-    "react": "^0.14.8",
-    "react-dom": "^0.14.8",
-    "react-router": "^2.0.1",
     "redux": "^3.3.1",
     "redux-actions": "^0.9.1",
     "redux-promise": "^0.5.3",
@@ -25,7 +23,17 @@
     "serialize-javascript": "^1.2.0"
   },
   "devDependencies": {
+    "babel-loader": "^6.2.4",
+    "babel-plugin-transform-runtime": "^6.6.0",
+    "babel-polyfill": "^6.7.2",
+    "babel-preset-es2015": "^6.3.13",
+    "babel-preset-stage-0": "^6.5.0",
+    "babel-register": "^6.4.3",
+    "babel-runtime": "^6.6.1",
+    "rimraf": "^2.5.2",
     "tap-spec": "^4.1.1",
-    "tape": "^4.5.1"
+    "tape": "^4.5.1",
+    "tape-watch": "^1.3.0",
+    "webpack": "^1.12.14"
   }
 }

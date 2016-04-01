@@ -1,5 +1,5 @@
 import test from 'tape'
-import Choko, {BOOT} from '../lib/bootstrap'
+import Choko, {BOOT} from '../src/lib/bootstrap'
 
 
 test('Boostrap new app with no arguments', (assert) => {
