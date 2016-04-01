@@ -29,6 +29,8 @@ const enabledModules = [
 const chokoApp = Choko(initialState, enabledModules)
 
 // @TODO:
+// 0. Tests - DONE :)
 // 1. Immutable-js
 // 2. Async - DONE :)
-// 3. Rules
+// 3. Dependencies between npm's and custom modules.
+// 4. Rules

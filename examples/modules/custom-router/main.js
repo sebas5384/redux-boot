@@ -6,7 +6,6 @@ export const HTTP_REQUEST_CHANGE = 'custom-router/routes/file/LOADED'
 
 export const BOOT = 'choko/core/BOOT'
 
-
 const handlers = {
   [HTTP_REQUEST_CHANGE]: (state, action) => {
     return {
@@ -17,6 +16,9 @@ const handlers = {
 }
 
 export default {
+  info: {
+    dependencies: ['web-server']
+  },
   reducer: handlers,
   middleware({getState, dispatch}) {
     return next => async (action) => {
