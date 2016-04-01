@@ -4,7 +4,7 @@
   "description": "",
   "main": "es6.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "tape -r babel-register tests/**/*.test.js | tap-spec",
     "example": "node examples/es6.js"
   },
   "author": "",
@@ -23,5 +23,9 @@
     "redux-promise": "^0.5.3",
     "redux-router": "^0.1.0",
     "serialize-javascript": "^1.2.0"
+  },
+  "devDependencies": {
+    "tap-spec": "^4.1.1",
+    "tape": "^4.5.1"
   }
 }
