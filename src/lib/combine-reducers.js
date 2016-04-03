@@ -4,8 +4,6 @@ export default function combineReducers(reducers) {
       (prevState, reducer) => reducer(prevState, action),
       currentState
     )
-
-
     return state
   }
 }
