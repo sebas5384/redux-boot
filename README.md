@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/choko-org/choko-redux.svg?branch=master)](https://travis-ci.org/choko-org/choko-redux)
+
 # Choko Redux
 > An **experimental** next generation Choko server based on [Redux](http://redux.js.org).
 
