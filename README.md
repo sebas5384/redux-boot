@@ -1,7 +1,7 @@
-[![Build Status](https://travis-ci.org/choko-org/choko-redux.svg?branch=master)](https://travis-ci.org/choko-org/choko-redux)
-
 # Choko Redux
 > An **experimental** next generation Choko server based on [Redux](http://redux.js.org).
+-----
+[![Build Status](https://travis-ci.org/choko-org/choko-redux.svg?branch=master)](https://travis-ci.org/choko-org/choko-redux)
 
 ## What is Choko?
 Minimal Framework based in [Redux](http://redux.js.org) to develop modulerized universal (backend and frontend) systems, based on Functional Programming paradigm and friends such as Map and Reduce, Immutability and Reactive programming.
