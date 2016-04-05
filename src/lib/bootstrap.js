@@ -15,15 +15,15 @@ export default function bootstrap(initialState = {}, modules = []) {
       typeof module.reducer == 'function' ? module.reducer : handleActions(module.reducer)
     ))
 
-  let middlewaresFromModules = modules
+  const middlewaresFromModules = modules
     .filter(module => typeof module.middleware == 'function')
     .map(module => module.middleware)
 
-  middlewaresFromModules.unshift(promiseMiddleware)
+  const rootMiddleware = middlewaresFromModules.concat(promiseMiddleware)
 
   const rootReducer = combineReducers(reducersFromModules)
 
-  let store = createStore(rootReducer, initialState, applyMiddleware(...middlewaresFromModules))
+  let store = createStore(rootReducer, initialState, applyMiddleware(...rootMiddleware))
 
   store.dispatch(bootAction())
 
