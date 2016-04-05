@@ -58,7 +58,7 @@ test('Boostrap new app with a module implementing a reducer', (assert) => {
   assert.equal(
     app.store.getState().foo,
     'baz',
-    'Module reducer changed state'
+    "Module reducer changed state"
   )
 
   assert.end()
@@ -116,7 +116,7 @@ test('Boostrap new app with a module implementing a middleware', (assert) => {
   assert.equal(
     app.store.getState().foo,
     'baz',
-    'Module middle dispatched an action that changed state'
+    "Module middleware dispatched an action that changed state"
   )
 
   assert.end()
