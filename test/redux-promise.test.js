@@ -59,8 +59,6 @@ test('Use redux-actions with redux-promise to fire async side-effect actions in 
           // Pause till this async side-effect actions
           // is fully dispatched.
           const sideEffect = await dispatch(afterBootAction('foo'))
-
-          console.log(getState(), 'NEW STATE')
         }
 
         return next(action)
