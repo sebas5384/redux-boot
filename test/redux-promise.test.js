@@ -5,6 +5,9 @@ import Choko, {BOOT} from '../src/lib/bootstrap'
 
 test('Use redux-actions with redux-promise to fire async side-effect actions in middlwares', (assert) => {
   const AFTER_BOOT = 'choko/core/test/AFTER_BOOT'
+  const AFTER_AFTER_BOOT = 'choko/core/test/AFTER_AFTER_BOOT'
+
+  const afterAfterBootAction = createAction(AFTER_AFTER_BOOT)
 
   const afterBootAction = createAction(AFTER_BOOT, async (id) => {
 
@@ -40,6 +43,15 @@ test('Use redux-actions with redux-promise to fire async side-effect actions in 
         ...state,
         foo: action.payload.foo
       }
+    },
+    
+    [AFTER_AFTER_BOOT]: (state, action) => {
+      assert.pass('Reducer called by another side-effect')
+
+      return {
+        ...state,
+        foo: 'wat'
+      }
     }
 
   }
@@ -56,9 +68,25 @@ test('Use redux-actions with redux-promise to fire async side-effect actions in 
         if (action.type === BOOT) {
           assert.pass('Middleware called')
 
-          // Pause till this async side-effect actions
+          // Async side-effect actions
           // is fully dispatched.
-          const sideEffect = await dispatch(afterBootAction('foo'))
+          const sideEffect = await next(afterBootAction('foo'))
+          
+          assert.equal(
+            getState().foo,
+            'wat',
+            "Async side-effect was handled"
+          )
+
+          assert.end()
+        }
+
+        if (action.type === AFTER_BOOT) {
+          assert.pass('Middleware called by side-effect')
+
+          // Async side-effect actions
+          // is fully dispatched.
+          const sideEffect = await next(afterAfterBootAction())
         }
 
         return next(action)
@@ -72,12 +100,4 @@ test('Use redux-actions with redux-promise to fire async side-effect actions in 
   ]
 
   const app = Choko(initialState, modules)
-
-  assert.equal(
-    app.store.getState().foo,
-    'baz',
-    "Async side-effect was handled"
-  )
-
-  assert.end()
 })
