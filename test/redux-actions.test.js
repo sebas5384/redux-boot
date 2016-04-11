@@ -57,13 +57,16 @@ test('Use redux-actions handlers instead of pure Redux reducers', (assert) => {
 
   const app = Choko(initialState, modules)
 
-  assert.equal(
-    app.store.getState().foo,
-    'baz',
-    "Module reducer was handled by redux-actions"
-  )
+  app.then(({action, store}) => {
 
-  assert.end()
+    assert.equal(
+      store.getState().foo,
+      'baz',
+      "Module reducer was handled by redux-actions"
+    )
+
+    assert.end()
+  })
 })
 
 test('Use redux-actions action helper instead of a pure function', (assert) => {
@@ -117,11 +120,14 @@ test('Use redux-actions action helper instead of a pure function', (assert) => {
 
   const app = Choko(initialState, modules)
 
-  assert.equal(
-    app.store.getState().foo,
-    'baz',
-    "Module action was handled by redux-actions"
-  )
+  app.then(({action, store}) => {
 
-  assert.end()
+    assert.equal(
+      store.getState().foo,
+      'baz',
+      "Module action was handled by redux-actions"
+    )
+
+    assert.end()
+  })
 })
