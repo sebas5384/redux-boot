@@ -28,7 +28,7 @@ export default function bootstrap(initialState = {}, modules = []) {
 
   const bootPromise = store.dispatch(bootAction(initialState))
 
-  return bootPromise.then((action) => {
+  return bootPromise.then(action => {
     return {
       action,
       store
@@ -36,4 +36,4 @@ export default function bootstrap(initialState = {}, modules = []) {
   })
 }
 
-export const bootAction = createAction(BOOT, async (initialState) => initialState)
+export const bootAction = createAction(BOOT, async initialState => initialState)
