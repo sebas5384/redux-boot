@@ -5,13 +5,16 @@ import Choko, {BOOT} from '../src/lib/bootstrap'
 test('Boostrap new app with no arguments', (assert) => {
   const app = Choko()
 
-  assert.deepLooseEqual(
-    Reflect.ownKeys(app.store),
-    ['dispatch', 'subscribe', 'getState', 'replaceReducer'],
-    'Store created'
-  )
+  app.then(({action, store}) => {
 
-  assert.end()
+    assert.deepLooseEqual(
+      Reflect.ownKeys(store),
+      ['dispatch', 'subscribe', 'getState', 'replaceReducer'],
+      'Store returned'
+    )
+
+    assert.end()
+  })
 })
 
 test('Boostrap new app with an initial state', (assert) => {
@@ -20,15 +23,19 @@ test('Boostrap new app with an initial state', (assert) => {
       name: 'Test app'
     }
   }
+
   const app = Choko(initialState)
 
-  assert.deepEqual(
-    app.store.getState(),
-    initialState,
-    'State is equal to initial state'
-  )
+  app.then(({action, store}) => {
 
-  assert.end()
+    assert.deepEqual(
+      store.getState(),
+      initialState,
+      'State is equal to initial state'
+    )
+
+    assert.end()
+  })
 })
 
 test('Boostrap new app with a module implementing a reducer', (assert) => {
@@ -55,13 +62,16 @@ test('Boostrap new app with a module implementing a reducer', (assert) => {
 
   const app = Choko(initialState, modules)
 
-  assert.equal(
-    app.store.getState().foo,
-    'baz',
-    "Module reducer changed state"
-  )
+  app.then(({action, store}) => {
 
-  assert.end()
+    assert.equal(
+      store.getState().foo,
+      'baz',
+      "Module reducer changed state"
+    )
+
+    assert.end()
+  })
 })
 
 test('Boostrap new app with a module implementing a middleware', (assert) => {
@@ -113,11 +123,14 @@ test('Boostrap new app with a module implementing a middleware', (assert) => {
 
   const app = Choko(initialState, modules)
 
-  assert.equal(
-    app.store.getState().foo,
-    'baz',
-    "Module middleware dispatched an action that changed state"
-  )
+  app.then(({action, store}) => {
 
-  assert.end()
+    assert.equal(
+      store.getState().foo,
+      'baz',
+      "Module middleware dispatched an action that changed state"
+    )
+
+    assert.end()
+  })
 })

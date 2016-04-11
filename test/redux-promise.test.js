@@ -102,7 +102,7 @@ test('Use redux-actions with redux-promise to fire async side-effect actions in 
   const app = Choko(initialState, modules)
 
   app.then(({action, store}) => {
-    
+
     assert.equal(
       store.getState().foo,
       'wat',
