@@ -1,6 +1,6 @@
 import test from 'tape'
 import Choko, {BOOT} from '../src/lib/bootstrap'
-
+import { isFSA } from 'flux-standard-action'
 
 test('Boostrap new app with no arguments', (assert) => {
   const app = Choko()
@@ -11,6 +11,11 @@ test('Boostrap new app with no arguments', (assert) => {
       Reflect.ownKeys(store),
       ['dispatch', 'subscribe', 'getState', 'replaceReducer'],
       'Store returned'
+    )
+
+    assert.ok(
+      isFSA(action),
+      'Action returned'
     )
 
     assert.end()
