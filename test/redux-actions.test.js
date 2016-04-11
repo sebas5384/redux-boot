@@ -3,10 +3,10 @@ import {createAction} from 'redux-actions'
 import Choko, {BOOT} from '../src/lib/bootstrap'
 
 
-test('Use redux-actions handlers instead of pure Redux reducers', (assert) => {
+test('Use redux-actions handlers instead of pure Redux reducers', assert => {
   const AFTER_BOOT = 'choko/core/test/AFTER_BOOT'
 
-  const afterBootAction = (value) => {
+  const afterBootAction = value => {
     return {
       type: AFTER_BOOT,
       payload: {
@@ -38,7 +38,7 @@ test('Use redux-actions handlers instead of pure Redux reducers', (assert) => {
     reducer: handlers,
 
     middleware({getState, dispatch}) {
-      return next => (action) => {
+      return next => action => {
 
         if (action.type === BOOT) {
           assert.pass('Middleware called')
@@ -69,10 +69,10 @@ test('Use redux-actions handlers instead of pure Redux reducers', (assert) => {
   })
 })
 
-test('Use redux-actions action helper instead of a pure function', (assert) => {
+test('Use redux-actions action helper instead of a pure function', assert => {
   const AFTER_BOOT = 'choko/core/test/AFTER_BOOT'
 
-  const afterBootAction = createAction(AFTER_BOOT, (value) => {
+  const afterBootAction = createAction(AFTER_BOOT, value => {
     return {
       foo: value
     }
@@ -101,7 +101,7 @@ test('Use redux-actions action helper instead of a pure function', (assert) => {
     reducer: handlers,
 
     middleware({getState, dispatch}) {
-      return next => (action) => {
+      return next => action => {
 
         if (action.type === BOOT) {
           assert.pass('Middleware called')

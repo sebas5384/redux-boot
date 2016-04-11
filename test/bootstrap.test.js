@@ -2,7 +2,7 @@ import test from 'tape'
 import Choko, {BOOT} from '../src/lib/bootstrap'
 import { isFSA } from 'flux-standard-action'
 
-test('Boostrap new app with no arguments', (assert) => {
+test('Boostrap new app with no arguments', assert => {
   const app = Choko()
 
   app.then(({action, store}) => {
@@ -22,7 +22,7 @@ test('Boostrap new app with no arguments', (assert) => {
   })
 })
 
-test('Boostrap new app with an initial state', (assert) => {
+test('Boostrap new app with an initial state', assert => {
   const initialState = {
     variables: {
       name: 'Test app'
@@ -43,7 +43,7 @@ test('Boostrap new app with an initial state', (assert) => {
   })
 })
 
-test('Boostrap new app with a module implementing a reducer', (assert) => {
+test('Boostrap new app with a module implementing a reducer', assert => {
   const initialState = {
     foo: 'bar'
   }
@@ -79,10 +79,10 @@ test('Boostrap new app with a module implementing a reducer', (assert) => {
   })
 })
 
-test('Boostrap new app with a module implementing a middleware', (assert) => {
+test('Boostrap new app with a module implementing a middleware', assert => {
   const AFTER_BOOT = 'choko/core/test/AFTER_BOOT'
 
-  const afterBoot = (value) => {
+  const afterBoot = value => {
     return {
       type: AFTER_BOOT,
       payload: {
@@ -109,7 +109,7 @@ test('Boostrap new app with a module implementing a middleware', (assert) => {
     },
 
     middleware({getState, dispatch}) {
-      return next => (action) => {
+      return next => action => {
 
         if (action.type === BOOT) {
           assert.pass('Middleware called')
