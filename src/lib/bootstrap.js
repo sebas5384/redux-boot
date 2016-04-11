@@ -19,17 +19,21 @@ export default function bootstrap(initialState = {}, modules = []) {
     .filter(module => typeof module.middleware == 'function')
     .map(module => module.middleware)
 
-  const rootMiddleware = middlewaresFromModules.concat(promiseMiddleware)
+  // Creates the root middleware and adds redux-promise middleware.
+  const rootMiddleware = [promiseMiddleware].concat(middlewaresFromModules)
 
   const rootReducer = combineReducers(reducersFromModules)
 
   let store = createStore(rootReducer, initialState, applyMiddleware(...rootMiddleware))
 
-  store.dispatch(bootAction())
+  const bootPromise = store.dispatch(bootAction(initialState))
 
-  return {
-    store
-  }
+  return bootPromise.then((action) => {
+    return {
+      action,
+      store
+    }
+  })
 }
 
-export const bootAction = createAction(BOOT)
+export const bootAction = createAction(BOOT, async (initialState) => initialState)
