@@ -2,7 +2,7 @@
   "name": "choko-redux",
   "version": "1.0.0",
   "description": "",
-  "main": "dist/index.js",
+  "main": "build/index.js",
   "scripts": {
     "build": "rm -f build/index.js* && webpack",
     "pretest": "rm -f build/test.js* && webpack --config ./webpack.config.test.js",
