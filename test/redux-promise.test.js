@@ -8,105 +8,126 @@ test('Use redux-actions with redux-promise to fire async side-effect actions in 
   const AFTER_BOOT = 'choko/core/test/AFTER_BOOT'
   const AFTER_AFTER_BOOT = 'choko/core/test/AFTER_AFTER_BOOT'
 
-  const afterAfterBootAction = createAction(AFTER_AFTER_BOOT)
+  // Mocking an API.
+  let data = {
+    1: 'bar',
+    2: 'baz',
+    3: 'rock'
+  }
 
+  const someApi = {
+    get(id) {
+      return Promise.resolve({
+        name: data[id]
+      })
+    }
+  }
+
+  // Asynchronous side-effect action.
   const afterBootAction = createAction(AFTER_BOOT, async id => {
 
-    // Mocking an Async IO call, like an API fetch.
-    const asyncContentFromIO = await new Promise((resolve, reject) => {
-      setTimeout(() => {
-        if (id === 'foo') {
-          resolve('baz')
-        }
-        else {
-          reject('id is not foo')
-        }
-      }, 1000)
-    })
-
-    // Payload of the action.
-    return {
-      foo: asyncContentFromIO
-    }
+    // Geting something from an API.
+    const result = await someApi.get(id)
+    return result
   })
+
+  // Synchronous side-effect action.
+  const afterAfterBootAction = createAction(AFTER_AFTER_BOOT)
 
   const initialState = {
     foo: 'bar'
   }
 
-  // React to an action with less boilerplaing.
-  const handlers = {
+  // Module with async side-effect.
+  const testAsyncModule = {
 
-    [AFTER_BOOT]: (state, action) => {
-      assert.pass('Reducer called')
+    reducer: {
+      // Reaction to after boot side-effect.
+      [AFTER_BOOT]: (state, action) => {
+        assert.pass('Reducer called by an "after boot" side-effect')
 
-      return {
-        ...state,
-        foo: action.payload.foo
+        return {
+          ...state,
+          foo: action.payload
+        }
       }
     },
-
-    [AFTER_AFTER_BOOT]: (state, action) => {
-      assert.pass('Reducer called by another side-effect')
-
-      return {
-        ...state,
-        foo: 'wat'
-      }
-    }
-
-  }
-
-  const testModule = {
-
-    // Less boilerplating.
-    reducer: handlers,
 
     middleware({getState, dispatch}) {
       // Note the async keyword.
       return next => async action => {
-        let result = next(action)
+        let nextResult = next(action)
 
+        // Reaction to the boostrap action.
         if (action.type === BOOT) {
-          assert.pass('Middleware called with BOOT')
+          assert.pass('Middleware called at bootstrap action')
 
-          // Async side-effect actions
-          // is fully dispatched.
-          const sideEffect = await dispatch(afterBootAction('foo'))
+          // Dispatch after boot side-effects.
+          const sideEffect = await dispatch(afterBootAction(3))
 
           assert.equal(
-            getState().foo,
-            'wat',
-            "Async side-effect was handled"
+            getState().foo.name,
+            'rock',
+            'Async "after boot" side-effect was handled'
           )
         }
+
+        return nextResult
+      }
+    }
+  }
+
+  // Module with sync side-effect.
+  const testSyncModule = {
+    reducer: {
+      [AFTER_AFTER_BOOT]: (state, action) => {
+        assert.pass('Reducer called by an "after, after boot" side-effect')
+
+        return {
+          ...state,
+          afterAfterBoot: true
+        }
+      }
+    },
+    middleware({getState, dispatch}) {
+      return next => action => {
+
+        let nextResult = next(action)
 
         if (action.type === AFTER_BOOT) {
           assert.pass('Middleware called by side-effect')
 
-          // Async side-effect actions
-          // is fully dispatched.
-          const sideEffect = await dispatch(afterAfterBootAction())
+          // Sync side-effect action is fully dispatched.
+          const sideEffect = dispatch(afterAfterBootAction())
         }
 
-        return result
+        if (action.type == AFTER_AFTER_BOOT) {
+          assert.pass('Middleware of sync module reacted to an "after, after boot" side-effect')
+        }
+
+        return nextResult
       }
     }
-
   }
 
   const modules = [
-    testModule
+    testAsyncModule,
+    testSyncModule
   ]
 
   const app = Choko(initialState, modules)
 
   app.then(({action, store}) => {
 
+    assert.ok(
+      store.getState().afterAfterBoot,
+      'After after side-effect was handled'
+    )
+
     assert.equal(
-      store.getState().foo,
-      'wat',
-      "Async bootstrap and all theirs side-effects were handled"
+      store.getState().foo.name,
+      'rock',
+      'Async bootstrap and all theirs side-effects were handled'
     )
 
     assert.end()
