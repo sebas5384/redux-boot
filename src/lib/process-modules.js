@@ -1,7 +1,7 @@
 import {handleActions} from 'redux-actions'
 
 export default function processModules(modules) {
-  const reducersFromModules = modules
+  const reducers = modules
     .filter(module => (
       typeof module.reducer == 'function' || typeof module.reducer == 'object'
     ))
@@ -9,12 +9,12 @@ export default function processModules(modules) {
       typeof module.reducer == 'function' ? module.reducer : handleActions(module.reducer)
     ))
 
-  const middlewaresFromModules = modules
+  const middlewares = modules
     .filter(module => typeof module.middleware == 'function')
     .map(module => module.middleware)
 
   return {
-    reducersFromModules,
-    middlewaresFromModules
+    reducers,
+    middlewares
   }
 }

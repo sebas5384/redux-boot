@@ -7,12 +7,12 @@ import processModules from './process-modules'
 export const BOOT = 'choko/core/BOOT'
 
 export default function bootstrap(initialState = {}, modules = []) {
-  const {reducersFromModules, middlewaresFromModules} = processModules(modules)
+  const {reducers, middlewares} = processModules(modules)
 
   // Creates the root middleware and adds redux-promise middleware.
-  const rootMiddleware = [promiseMiddleware].concat(middlewaresFromModules)
+  const rootMiddleware = [promiseMiddleware].concat(middlewares)
 
-  const rootReducer = combineReducers(reducersFromModules)
+  const rootReducer = combineReducers(reducers)
 
   let store = createStore(rootReducer, initialState, applyMiddleware(...rootMiddleware))
 
