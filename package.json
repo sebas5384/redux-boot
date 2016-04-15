@@ -1,6 +1,6 @@
 {
-  "name": "choko-redux",
-  "version": "1.0.0",
+  "name": "redux-boot",
+  "version": "0.1.0",
   "description": "",
   "main": "build/index.js",
   "scripts": {

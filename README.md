@@ -1,5 +1,5 @@
 # Choko Redux
-[![Build Status](https://travis-ci.org/choko-org/choko-redux.svg?branch=master)](https://travis-ci.org/choko-org/choko-redux)
+[![Build Status](https://travis-ci.org/choko-org/redux-boot.svg?branch=master)](https://travis-ci.org/choko-org/redux-boot)
 
 > An **experimental** next generation Choko server based on [Redux](http://redux.js.org).
 
@@ -17,7 +17,7 @@ Minimal Framework based in [Redux](http://redux.js.org) to develop modulerized u
 
 **Install**
 ```sh
-git clone https://github.com/choko-org/choko-redux.git
+git clone https://github.com/choko-org/redux-boot.git
 npm install
 ```
 
@@ -32,7 +32,7 @@ npm test
 ```
 
 ## Examples:
-Soon ... but for now see the [bootstrap tests](https://github.com/choko-org/choko-redux/blob/master/test/bootstrap.test.js#L67-L123).
+Soon ... but for now see the [bootstrap tests](https://github.com/choko-org/redux-boot/blob/master/test/bootstrap.test.js#L67-L123).
 
 ## License
 GNU General Public License (GPL) version 3.
