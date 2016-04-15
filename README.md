@@ -8,6 +8,10 @@
 
 Minimal Framework using [Redux](http://redux.js.org) to develop modularized universal (backend and frontend) applications, based on functional programming paradigms and friends such as Map and Reduce, Immutability and Reactive programming.
 
+ > "Simplicity is the ultimate sophistication."
+ > -- Leonardo da Vinci
+
+
 ## What Redux Boot provides?
 
 - **Module API** - Clean **organization and reuse patterns** for your code.
@@ -16,6 +20,7 @@ Minimal Framework using [Redux](http://redux.js.org) to develop modularized univ
 ## Getting started
 
 **Install**
+
 ```sh
 npm install redux-boot
 ```
