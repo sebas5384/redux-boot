@@ -1,9 +1,9 @@
 import test from 'tape'
-import Choko, {BOOT} from '../src/lib/bootstrap'
+import boot, {BOOT} from '../src/lib/bootstrap'
 import { isFSA } from 'flux-standard-action'
 
 test('Boostrap new app with no arguments', assert => {
-  const app = Choko()
+  const app = boot()
 
   app.then(({action, store}) => {
 
@@ -29,7 +29,7 @@ test('Boostrap new app with an initial state', assert => {
     }
   }
 
-  const app = Choko(initialState)
+  const app = boot(initialState)
 
   app.then(({action, store}) => {
 
@@ -65,7 +65,7 @@ test('Boostrap new app with a module implementing a reducer', assert => {
     testModule
   ]
 
-  const app = Choko(initialState, modules)
+  const app = boot(initialState, modules)
 
   app.then(({action, store}) => {
 
@@ -126,7 +126,7 @@ test('Boostrap new app with a module implementing a middleware', assert => {
     testModule
   ]
 
-  const app = Choko(initialState, modules)
+  const app = boot(initialState, modules)
 
   app.then(({action, store}) => {
 

@@ -4,7 +4,7 @@ import configureStore from './configure-store'
 
 export const BOOT = 'choko/core/BOOT'
 
-export default function bootstrap(initialState = {}, modules = []) {
+export default function boot(initialState = {}, modules = []) {
   const {reducers, middlewares} = processModules(modules)
 
   let store = configureStore(initialState, reducers, middlewares)

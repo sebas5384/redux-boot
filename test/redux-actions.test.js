@@ -1,6 +1,6 @@
 import test from 'tape'
 import {createAction} from 'redux-actions'
-import Choko, {BOOT} from '../src/lib/bootstrap'
+import boot, {BOOT} from '../src/lib/bootstrap'
 
 
 test('Use redux-actions handlers instead of pure Redux reducers', assert => {
@@ -55,7 +55,7 @@ test('Use redux-actions handlers instead of pure Redux reducers', assert => {
     testModule
   ]
 
-  const app = Choko(initialState, modules)
+  const app = boot(initialState, modules)
 
   app.then(({action, store}) => {
 
@@ -118,7 +118,7 @@ test('Use redux-actions action helper instead of a pure function', assert => {
     testModule
   ]
 
-  const app = Choko(initialState, modules)
+  const app = boot(initialState, modules)
 
   app.then(({action, store}) => {
 
