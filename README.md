@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/choko-org/redux-boot.svg?branch=master)](https://travis-ci.org/choko-org/redux-boot)
 
-> An **experimental** next generation Redux Boot server based on [Redux](http://redux.js.org).
+> Modular [Redux](http://redux.js.org) bootstrap with asynchronous side-effects.
 
 ## What is Redux Boot?
 
