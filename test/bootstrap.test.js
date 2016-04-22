@@ -80,7 +80,7 @@ test('Boostrap new app with a module implementing a reducer', assert => {
 })
 
 test('Boostrap new app with a module implementing a middleware', assert => {
-  const AFTER_BOOT = 'choko/core/test/AFTER_BOOT'
+  const AFTER_BOOT = 'redux-boot/test/AFTER_BOOT'
 
   const afterBoot = value => {
     return {

@@ -2,7 +2,7 @@ import {createAction} from 'redux-actions'
 import processModules from './process-modules'
 import configureStore from './configure-store'
 
-export const BOOT = 'choko/core/BOOT'
+export const BOOT = 'redux-boot/BOOT'
 
 export default function boot(initialState = {}, modules = []) {
   const {reducers, middlewares} = processModules(modules)

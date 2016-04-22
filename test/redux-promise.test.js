@@ -5,8 +5,8 @@ import boot, {BOOT} from '../src/lib/bootstrap'
 
 test('Use redux-actions with redux-promise to fire async side-effect actions in middlewares', assert => {
 
-  const AFTER_BOOT = 'choko/core/test/AFTER_BOOT'
-  const AFTER_AFTER_BOOT = 'choko/core/test/AFTER_AFTER_BOOT'
+  const AFTER_BOOT = 'redux-boot/test/AFTER_BOOT'
+  const AFTER_AFTER_BOOT = 'redux-boot/test/AFTER_AFTER_BOOT'
 
   // Mocking an API.
   let data = {

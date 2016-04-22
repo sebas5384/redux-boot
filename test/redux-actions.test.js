@@ -4,7 +4,7 @@ import boot, {BOOT} from '../src/lib/bootstrap'
 
 
 test('Use redux-actions handlers instead of pure Redux reducers', assert => {
-  const AFTER_BOOT = 'choko/core/test/AFTER_BOOT'
+  const AFTER_BOOT = 'redux-boot/test/AFTER_BOOT'
 
   const afterBootAction = value => {
     return {
@@ -70,7 +70,7 @@ test('Use redux-actions handlers instead of pure Redux reducers', assert => {
 })
 
 test('Use redux-actions action helper instead of a pure function', assert => {
-  const AFTER_BOOT = 'choko/core/test/AFTER_BOOT'
+  const AFTER_BOOT = 'redux-boot/test/AFTER_BOOT'
 
   const afterBootAction = createAction(AFTER_BOOT, value => {
     return {
