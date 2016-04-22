@@ -10,11 +10,26 @@ export default function processModules(modules) {
     ))
 
   const middlewares = modules
-    .filter(module => typeof module.middleware == 'function')
-    .map(module => module.middleware)
+    .filter(module => (
+      typeof module.middleware == 'function' || typeof module.middleware == 'object'
+    ))
+    .map(module => (
+      typeof module.middleware == 'function' ? module.middleware : handleMiddlewares(module.middleware)
+    ))
 
   return {
     reducers,
     middlewares
+  }
+}
+
+function handleMiddlewares(listeners) {
+  return store => next => action => {
+    // Execute action listeners, if any was set for the current action.
+    if (listeners[action.type]) {
+      return listeners[action.type](store)(next)(action)
+    }
+
+    return next(action)
   }
 }
