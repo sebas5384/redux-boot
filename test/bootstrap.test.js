@@ -1,6 +1,7 @@
 import test from 'tape'
 import boot, {BOOT} from '../src/lib/bootstrap'
 import { isFSA } from 'flux-standard-action'
+import $$observable from 'symbol-observable'
 
 test('Boostrap new app with no arguments', assert => {
   const app = boot()
@@ -9,7 +10,7 @@ test('Boostrap new app with no arguments', assert => {
 
     assert.deepLooseEqual(
       Reflect.ownKeys(store),
-      ['dispatch', 'subscribe', 'getState', 'replaceReducer'],
+      ['dispatch', 'subscribe', 'getState', 'replaceReducer', $$observable],
       'Store returned'
     )
 
