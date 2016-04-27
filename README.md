@@ -1,5 +1,5 @@
 # Redux Boot
-> Modular [Redux](http://redux.js.org) bootstrap with asynchronous side-effects.
+Modular [Redux](http://redux.js.org) bootstrap with asynchronous side-effects.
 
 [![Build Status](https://travis-ci.org/choko-org/redux-boot.svg?branch=master)](https://travis-ci.org/choko-org/redux-boot)
 
