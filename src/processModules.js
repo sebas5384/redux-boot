@@ -23,7 +23,7 @@ export default function processModules(modules) {
   }
 }
 
-function handleMiddlewares(listeners) {
+export function handleMiddlewares(listeners) {
   return store => next => action => {
     // Execute action listeners, if any was set for the current action.
     if (listeners[action.type]) {
