@@ -1,7 +1,7 @@
-import bootstrap, {BOOT} from './lib/bootstrap'
-import processModules from './lib/process-modules'
-import combineReducers from './lib/combine-reducers'
-import configureStore from './lib/configure-store'
+import bootstrap, {BOOT} from './bootstrap'
+import processModules from './processModules'
+import combineReducers from './combineReducers'
+import configureStore from './configureStore'
 
 export default bootstrap
 
