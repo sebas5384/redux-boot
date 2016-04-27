@@ -1,5 +1,5 @@
 import test from 'tape'
-import boot, {BOOT} from '../src/lib/bootstrap'
+import boot, {BOOT} from '../src/bootstrap'
 import { isFSA } from 'flux-standard-action'
 import $$observable from 'symbol-observable'
 

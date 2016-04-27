@@ -1,6 +1,6 @@
 import {createAction} from 'redux-actions'
-import processModules from './process-modules'
-import configureStore from './configure-store'
+import processModules from './processModules'
+import configureStore from './configureStore'
 
 export const BOOT = 'redux-boot/BOOT'
 

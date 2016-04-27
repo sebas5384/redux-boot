@@ -1,6 +1,6 @@
 import test from 'tape'
 import {createAction} from 'redux-actions'
-import boot, {BOOT} from '../src/lib/bootstrap'
+import boot, {BOOT} from '../src/bootstrap'
 
 
 test('Use redux-actions handlers instead of pure Redux reducers', assert => {
