@@ -1,4 +1,5 @@
 # Redux Boot
+
 Modular [Redux](http://redux.js.org) bootstrap with asynchronous side-effects.
 
 [![Build Status](https://travis-ci.org/choko-org/redux-boot.svg?branch=master)](https://travis-ci.org/choko-org/redux-boot)
@@ -9,7 +10,6 @@ Minimal Framework using [Redux](http://redux.js.org) to develop modularized univ
 
  > "Simplicity is the ultimate sophistication."
  > -- Leonardo da Vinci
-
 
 ## What Redux Boot provides?
 
@@ -34,14 +34,13 @@ const initialState = {
 }
 
 const testModule = {
-  reducer(state, action) {
-    if (action.type === BOOT) {
+  reducer: {  
+    [BOOT]: (state, action) => {
       return {
         ...state,
         foo: 'baz'
       }
     }
-    return state
   }
 }
 
