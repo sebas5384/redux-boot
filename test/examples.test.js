@@ -87,7 +87,7 @@ test('Example with a simple reducer and a sync middleware', assert => {
 test('Example with a simple reducer and an async middleware', assert => {
   const CHANGE_FOO = 'redux-boot/test/CHANGE_FOO'
 
-  const changeFoo = createAction(CHANGE_FOO, async (value) => {
+  const changeFoo = createAction(CHANGE_FOO, async value => {
 
     return new Promise((resolve, reject) => {
       setTimeout(() => resolve(value), 1)
