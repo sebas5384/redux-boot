@@ -5,6 +5,39 @@ import boot, {BOOT} from '../src/index'
 import {createAction} from 'redux-actions'
 import axios from 'axios'
 
+test('Example with a simple reducer', assert => {
+  const initialState = {
+    foo: 'bar'
+  }
+
+  const testModule = {
+    reducer: {
+      [BOOT]: (state, action) => {
+        return {
+          ...state,
+          foo: 'baz'
+        }
+      }
+    }
+  }
+
+  const modules = [
+    testModule
+  ]
+
+  const app = boot(initialState, modules)
+
+  app.then(({action, store}) => {
+    assert.equal(
+      store.getState().foo,
+      'baz',
+      "State was changed by testModule reducer during the bootstrap"
+    )
+    assert.end()
+  })
+
+})
+
 test('Example using reducer and middleware handlers', assert => {
 
   // Declare the initial state of your App.
