@@ -17,8 +17,10 @@ test('Use redux-actions with redux-promise to fire async side-effect actions in 
 
   const someApi = {
     get(id) {
-      return Promise.resolve({
-        name: data[id]
+      return new Promise((resolve, reject) => {
+        setTimeout(() => {
+          resolve({name: data[id]})
+        }, 1000)
       })
     }
   }
