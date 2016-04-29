@@ -1,4 +1,16 @@
 {
   "gitbook": "2.x.x",
-  "title": "Redux Boot"
-}
+  "title": "Redux Boot",
+  "structure": {
+    "summary": "docs/README.md"
+  },
+  "plugins": ["edit-link", "prism", "-highlight", "github", "anker-enable"],
+  "pluginsConfig": {
+    "edit-link": {
+      "base": "https://github.com/choko-org/redux-boot/tree/master",
+      "label": "Edit This Page"
+    },
+    "github": {
+      "url": "https://github.com/choko-org/redux-boot/"
+    }
+  }
