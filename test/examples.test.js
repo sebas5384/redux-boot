@@ -38,6 +38,52 @@ test('Example with a simple reducer', assert => {
 
 })
 
+test('Example with a simple reducer and a sync middleware', assert => {
+  const CHANGE_FOO = 'redux-boot/test/CHANGE_FOO'
+
+  const changeFoo = createAction(CHANGE_FOO)
+
+  const initialState = {
+    foo: 'bar'
+  }
+
+  const testModule = {
+    // A simple reducer that changes state on the "CHANGE_FOO" action.
+    reducer: {
+      [CHANGE_FOO]: (state, action) => {
+        return {
+          ...state,
+          foo: action.payload
+        }
+      }
+    },
+
+    // Dispatch the side-effect action "changeFoo" that reacts to the bootstrap.
+    middleware: {
+      [BOOT]: store => next => action => {
+        store.dispatch(changeFoo('baz'))
+        return next(action)
+      }
+    }
+  }
+
+  const modules = [
+    testModule
+  ]
+
+  const app = boot(initialState, modules)
+
+  app.then(({action, store}) => {
+    assert.equal(
+      store.getState().foo,
+      'baz',
+      "State was changed by testModule reducer with data from middleware"
+    )
+    assert.end()
+  })
+
+})
+
 test('Example using reducer and middleware handlers', assert => {
 
   // Declare the initial state of your App.
