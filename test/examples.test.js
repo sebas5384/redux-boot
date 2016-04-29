@@ -84,7 +84,59 @@ test('Example with a simple reducer and a sync middleware', assert => {
 
 })
 
-test('Example using reducer and middleware handlers', assert => {
+test('Example with a simple reducer and an async middleware', assert => {
+  const CHANGE_FOO = 'redux-boot/test/CHANGE_FOO'
+
+  const changeFoo = createAction(CHANGE_FOO, async (value) => {
+
+    return new Promise((resolve, reject) => {
+      setTimeout(() => resolve(value), 1)
+    })
+  })
+
+  const initialState = {
+    foo: 'bar'
+  }
+
+  const testModule = {
+    // A simple reducer that changes state on the "CHANGE_FOO" action.
+    reducer: {
+      [CHANGE_FOO]: (state, action) => {
+        return {
+          ...state,
+          foo: action.payload
+        }
+      }
+    },
+
+    // Dispatch the side-effect action "changeFoo" that reacts to the bootstrap.
+    middleware: {
+      [BOOT]: store => next => async action => {
+        const result = next(action)
+        await store.dispatch(changeFoo('baz'))
+        return result
+      }
+    }
+  }
+
+  const modules = [
+    testModule
+  ]
+
+  const app = boot(initialState, modules)
+
+  app.then(({action, store}) => {
+    assert.equal(
+      store.getState().foo,
+      'baz',
+      "State was changed by testModule reducer with data from async middleware"
+    )
+    assert.end()
+  })
+
+})
+
+test('Example with a simple reducer and an async middleware (Spotify API)', assert => {
 
   // Declare the initial state of your App.
   const initialState = {
@@ -115,7 +167,7 @@ test('Example using reducer and middleware handlers', assert => {
       [SPOTIFY_SEARCH]: {
         // The search was a success.
         next(state, action) {
-          const firstArtist = action.payload.data.artists.items[0]          
+          const firstArtist = action.payload.data.artists.items[0]
           return {
             ...state,
             artist: firstArtist.name
@@ -154,7 +206,7 @@ test('Example using reducer and middleware handlers', assert => {
   // Create the App.
   const app = boot(initialState, modules)
 
-  // When the App is 
+  // When the App is
   app.then(({action, store}) => {
 
     assert.equal(
