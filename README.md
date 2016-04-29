@@ -24,7 +24,7 @@ Minimal Framework using [Redux](http://redux.js.org) to develop modularized univ
 npm install redux-boot
 ```
 
-**Example**
+**Basic Usage**
 
 ```js
 import boot, {BOOT} from 'redux-boot'
@@ -55,6 +55,51 @@ app.then(({action, store}) => {
   // Should print 'baz'.
   console.log(store.getState().foo)
 
+})
+```
+
+**Sync middleware (with redux-actions)**
+
+```js
+import boot, {BOOT} from 'redux-boot'
+import {createAction} from 'redux-actions'
+
+const CHANGE_FOO = 'redux-boot/test/CHANGE_FOO'
+
+const changeFoo = createAction(CHANGE_FOO)
+
+const initialState = {
+  foo: 'bar'
+}
+
+const testModule = {
+  reducer: {
+    [CHANGE_FOO]: (state, action) => {
+      return {
+        ...state,
+        foo: action.payload
+      }
+    }
+  },
+
+  middleware: {
+    [BOOT]: store => next => action => {
+      store.dispatch(changeFoo('baz'))
+      return next(action)
+    }
+  }
+}
+
+const modules = [
+  testModule
+]
+
+const app = boot(initialState, modules)
+
+app.then(({action, store}) => {
+
+  // Should print 'baz'.
+  console.log(store.getState().foo)
 })
 ```
 
