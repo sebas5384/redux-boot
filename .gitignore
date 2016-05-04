@@ -7,6 +7,10 @@
 ###########
 /build
 
+# Documentation #
+#################
+/docs/_book
+
 # Packages #
 ############
 *.7z
