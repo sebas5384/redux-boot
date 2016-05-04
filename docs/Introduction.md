@@ -7,6 +7,7 @@
  
 ## Principles
  Based on the Functional Programming principles / paradigms.
+
 1. Changes of the state are explicit.
 2. Eliminate redundant code.
 3. State less functions (no this).
