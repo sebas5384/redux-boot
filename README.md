@@ -179,6 +179,9 @@ npm test
 - The [bootstrap tests](https://github.com/choko-org/redux-boot/blob/master/test/bootstrap.test.js).
 - Simple [web server App](https://github.com/choko-org/redux-boot-web-app-example)
 
+## Documentation
+
+  For more details see the [documentation](https://choko.gitbooks.io/redux-boot/content/index.html).
 
 ## License
 
