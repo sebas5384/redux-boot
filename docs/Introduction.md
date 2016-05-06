@@ -10,7 +10,7 @@
 
 1. Changes of the state are explicit.
 2. Eliminate redundant code.
-3. State less functions (no this).
+3. State less functions (no *this* keyword).
 4. Side-effects, are reactions from dispatched actions.
 5. The value of variables are immutable. Create a new value instead of changing.
 6. Modules and functions should have one goal.
