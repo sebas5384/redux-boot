@@ -215,7 +215,84 @@ test('Example with a simple reducer and an async middleware (Spotify API)', asse
       'A side-effect of BOOT action modified the state using a middleware and reducer handler.'
     )
 
+    assert.end()
+  })
+})
+
+test('Example of reacting (side-effect) before and after an action', assert => {
+
+  const REQUEST_API = 'redux-boot/test/REQUEST_API'
+  const LOADING = 'redux-boot/test/LOADING'
+
+  const requestApiAction = createAction(REQUEST_API, async path => {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => resolve({
+        id: 24,
+        name: 'Irlanda'
+      }), 1)
+    })
   })
 
-  assert.end()
+  const initialState = {
+    loading: false
+  }
+
+  const loaderModule = {
+    reducer: {
+      [LOADING]: (state, action) => {
+        return {
+          ...state,
+          loading: action.payload
+        }
+      },
+      [REQUEST_API]: (state, action) => {
+        return {
+          ...state,
+          request: action.payload
+        }
+      }
+    },
+    middleware: {
+      [BOOT]: store => next => action => {
+        
+        store.dispatch(requestApiAction('user/23'))
+
+        return next(action)
+      },
+      [REQUEST_API]: store => next => action => {
+
+        // Show the loader.
+        store.dispatch({type: LOADING, payload: true})
+
+        assert.looseEqual(
+          store.getState(),
+          {loading: true},
+          'loading in progress'
+        )
+
+        // Yield from the REQUEST_API action.
+        const nextResult = next(action)
+
+        store.dispatch({type: LOADING, payload: false})
+
+        assert.looseEqual(
+          store.getState(),
+          {
+            loading: false,
+            request: { id: 24, name: 'Irlanda' }
+          },
+          'loading is done'
+        )
+
+        return nextResult
+      }
+    }
+  }
+
+  const modules = [
+    loaderModule
+  ]
+
+  const app = boot(initialState, modules)
+    .then(() => assert.end())
 })
