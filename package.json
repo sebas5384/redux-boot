@@ -1,7 +1,7 @@
 {
   "name": "redux-boot",
   "version": "0.1.3",
-  "description": "",
+  "description": "Minimal Framework using Redux to develop modularized universal.",
   "main": "build/index.js",
   "scripts": {
     "build": "rm -f build/index.js* && webpack",
@@ -14,6 +14,7 @@
   },
   "author": "",
   "license": "GPL-3.0",
+  "repository": "choko-org/redux-boot",
   "dependencies": {
     "redux": "^3.3.1",
     "redux-actions": "^0.9.1",
