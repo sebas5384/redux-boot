@@ -22,9 +22,11 @@ Just like you can do with reducers, you can also use an object for the middlewar
 ```js
 const API_REQUEST = 'mymodule/REQUEST'
 const mymodule = {
-  [API_REQUEST]: store => next => action => {
-    console.log(action.payload.body, 'Api request')
-    return next(action)
+  middleware: {
+    [API_REQUEST]: store => next => action => {
+      console.log(action.payload.body, 'Api request')
+      return next(action)
+    }
   }
 }
 ```
