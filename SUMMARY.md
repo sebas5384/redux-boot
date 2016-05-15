@@ -6,4 +6,5 @@
    * [Modules](docs/Modules.md)
    * [Reducers](docs/Reducers.md)
    * [Middlewares](docs/Middlewares.md)
+   * Side Effects
 

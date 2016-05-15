@@ -16,6 +16,15 @@ Minimal Framework using [Redux](http://redux.js.org) to develop modularized univ
 - **Module API** - Clean **organization and reuse patterns** for your code.
 - **Async side-effects** - **No-brainer** async side-effects with [redux-actions](https://github.com/acdlite/redux-actions) and [redux-promise](https://github.com/acdlite/redux-promise).
 
+## Examples:
+
+- The [bootstrap tests](https://github.com/choko-org/redux-boot/blob/master/test/bootstrap.test.js).
+- Simple [web server App](https://github.com/choko-org/redux-boot-web-app-example)
+
+## Documentation
+
+  For more details see the [documentation](https://choko.gitbooks.io/redux-boot/content/index.html).
+
 ## Getting started
 
 **Install**
@@ -173,15 +182,6 @@ npm run build
 ```sh
 npm test
 ```
-
-## Examples:
-
-- The [bootstrap tests](https://github.com/choko-org/redux-boot/blob/master/test/bootstrap.test.js).
-- Simple [web server App](https://github.com/choko-org/redux-boot-web-app-example)
-
-## Documentation
-
-  For more details see the [documentation](https://choko.gitbooks.io/redux-boot/content/index.html).
 
 ## License
 
