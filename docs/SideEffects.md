@@ -105,3 +105,8 @@ const mymodule = {
   }
 }
 ```
+
+The difference between using the `next()` and `dispatch()` functions:
+
+- `next()`: Dispatch an action using the same cycle of the original action *(not recommended)*.
+- `dispatch()`: Dispatch an action with a new life cycle.

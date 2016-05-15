@@ -31,4 +31,6 @@ const mymodule = {
 }
 ```
 
+In middlewares you can dispatch an action using `next()` or `dispatch()`, see the [Side Effects](SideEffects.md) docs for better understanding on why and how to use them.
+
 You can check Redux documentation for a more detailed documentation about Redux's [reducers](http://redux.js.org/docs/basics/Reducers.html) and [middlewares](http://redux.js.org/docs/advanced/Middleware.html).
