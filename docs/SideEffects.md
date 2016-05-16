@@ -11,7 +11,7 @@
 - Writing some data to disk, or any i/o stuff.
 - Make a request to an API after submitting a log in form.
 
-Here's an example were the program is going to log-in a user and changing the state to save the user's data.
+Here's an example, logging a user and changing the state to save the user's data.
 ```js
 import api from 'lib/api';
 
@@ -110,3 +110,6 @@ The difference between using the `next()` and `dispatch()` functions:
 
 - `next()`: Dispatch an action using the same cycle of the original action *(not recommended)*.
 - `dispatch()`: Dispatch an action with a new life cycle.
+
+## Async side effects
+> @TODO
