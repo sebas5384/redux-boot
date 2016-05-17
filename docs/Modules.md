@@ -1,6 +1,6 @@
 # Modules
 
-A module is made of a reducer and/or a middleware.
+A module is made of a reducer and/or a middleware and assumes the actions are [FSA](https://github.com/acdlite/flux-standard-action) compliant.
 
 Its **basic signature** is the following:
 
@@ -114,7 +114,7 @@ const module = {
 
 }
 ```
-
+---
 ## Standard signature of a module file
 
 `@file: /modules/user/index.js`
