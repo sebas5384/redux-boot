@@ -22,7 +22,7 @@ let state = {
   session: null
 };
 
-const login(name, pass) {
+const login = (name, pass) => {
   // Use the backend Api to login the user which creates an session.
   const user = api.post('user', {name, pass})
     .then((data) => {
