@@ -71,6 +71,17 @@ The middleware must be the only place where you can execute side effect and othe
 
 Here's an example dispatching actions after and before:
 ```js
+import {createAction} from 'redux-actions';
+
+const LOGIN = 'redux-boot/user/LOGIN'
+const loginAction = createAction(LOGIN, ({name, pass}) => ({name, pass}))
+
+const LOGIN_AFTER = 'redux-boot/user/LOGIN_AFTER'
+const afterLoginAction = createAction(LOGIN_AFTER, ({name, pass}) => ({name, pass}))
+
+const LOGIN_BEFORE = 'redux-boot/user/LOGIN_BEFORE'
+const beforeLoginAction = createAction(LOGIN_BEFORE)
+
 const mymodule = {
   reducer: {
     [LOGIN_BEFORE]: (state, action) => {
@@ -91,7 +102,7 @@ const mymodule = {
       const {name, pass} = action.payload
       
       // LOGIN_BEFORE action.
-      dispatch(beforeLoginAction(name, pass))
+      dispatch(beforeLoginAction({name, pass}))
       
       // Execute the LOGIN action.
       const nextResult = next(action)
@@ -112,4 +123,73 @@ The difference between using the `next()` and `dispatch()` functions:
 - `dispatch()`: Dispatch an action with a new life cycle.
 
 ## Async side effects
-> @TODO
+
+Side effects like the example above, are synchronous, so if any module needs to fetch some Api before the `LOGIN` action is done the `LOGIN_BEFORE` must wait till any **asynchronous** side effect is done too.
+Using the `async`/`await` keywords the module above could support async side effects.
+
+Let's make `beforeLoginAction()` function **async compatible**:
+
+```js
+import {createAction} from 'redux-actions';
+
+const LOGIN_BEFORE = 'redux-boot/user/LOGIN_BEFORE';
+// Notice the "async" keyword which makes this action async compatible.
+const beforeLoginAction = createAction(LOGIN_BEFORE, async ({name, pass}) => ({name, pass}));
+
+const LOGIN = 'redux-boot/user/LOGIN';
+const loginAction = createAction(LOGIN, ({name, pass}) => ({name, pass}));
+
+const LOGIN_AFTER = 'redux-boot/user/LOGIN_AFTER';
+const afterLoginAction = createAction(LOGIN_AFTER);
+
+const mymodule = {
+  reducer: {
+    [LOGIN_BEFORE]: {
+      // Mutate the state in case of success.
+      next: (state, action) => {
+        return {
+          ...state,
+          logging: true
+        }
+      },
+      // Mutate the state in case of failure.
+      throw: (state, action) => {
+        return {
+          ...state,
+          logging: false,
+          loggingError: "Can't login right now."
+        }
+      }
+    },
+    [LOGIN_AFTER]: (state, action) => {
+      return {
+        ...state,
+        logging: false,
+        loggedIn: state.user.hasOwnProperty('id')
+    }
+  },
+  middleware: {
+    // Reacting to LOGIN action dispatching before/after side effects.
+    // Notice the "async" keyword so the "await" keyword can be used below.
+    [LOGIN]: ({dispatch}) => next => async action => {
+      const {name, pass} = action.payload
+      
+      // LOGIN_BEFORE action.
+      // Notice the "await" keyword which makes it async compatible.
+      await dispatch(beforeLoginAction({name, pass}))
+      
+      // Execute the LOGIN action, after LOGIN_BEFORE
+      // and it's own async side effects are done.
+      const nextResult = next(action)
+      
+      // Dispatch LOGIN_AFTER action.
+      dispatch(afterLoginAction())
+      
+      // Return the original action.
+      return nextResult
+    }
+  }
+}
+```
+
+Asynchronous actions / side effects and middlewares are possible because `redux-boot` use the [`redux-promise`](https://github.com/acdlite/redux-promise) Redux's middleware.
