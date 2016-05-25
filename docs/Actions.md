@@ -55,7 +55,7 @@ const loginAction = createAction(LOGIN, async (...args) => {
 })
 ```
 
-Dispatching asynchronous action give us a promise which will be resolved when the action lifecycle is done.
+Dispatching asynchronous action give us a promise which will be resolved when the action life cycle is done.
 
 
 ```js
