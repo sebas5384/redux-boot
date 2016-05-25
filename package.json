@@ -1,6 +1,6 @@
 {
   "name": "redux-boot",
-  "version": "0.1.4",
+  "version": "1.0.0",
   "description": "Minimal Framework using Redux to develop modularized universal.",
   "main": "build/index.js",
   "scripts": {
