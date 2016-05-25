@@ -7,5 +7,5 @@
    * [Reducers](docs/Reducers.md)
    * [Middlewares](docs/Middlewares.md)
    * [Side Effects](docs/SideEffects.md)
-   * Actions
+   * [Actions](docs/Actions.md)
 
