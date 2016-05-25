@@ -8,16 +8,16 @@ There are two kinds of actions, synchronous and asynchronous:
 
 **Vanilla action:**
 ```js
-const LOGIN = 'redux-boot/user/login'
+const LOGIN = 'redux-boot/user/LOGIN';
 
 const loginAction = (...args) => ({ type: LOGIN, payload: ...args })
 ```
 
 **Using [Redux-actions](https://github.com/acdlite/redux-actions):**
 ```js
-import {createAction} from 'redux-actions'
+import {createAction} from 'redux-actions';
 
-const LOGIN = 'redux-boot/user/login'
+const LOGIN = 'redux-boot/user/LOGIN';
 
 const loginAction = createAction(LOGIN)
 ```
@@ -25,7 +25,7 @@ const loginAction = createAction(LOGIN)
 ## Asynchronous
 **Vanilla action:**
 ```js
-const LOGIN = 'redux-boot/user/LOGIN'
+const LOGIN = 'redux-boot/user/LOGIN';
 
 const loginAction = async (...args) => {
   
@@ -39,9 +39,9 @@ const loginAction = async (...args) => {
 
 **Using [Redux-actions](https://github.com/acdlite/redux-actions):**
 ```js
-import {createAction} from 'redux-actions'
+import {createAction} from 'redux-actions';
 
-const LOGIN = 'redux-boot/user/LOGIN'
+const LOGIN = 'redux-boot/user/LOGIN';
 
 const loginAction = createAction(LOGIN, async (...args) => {
 
@@ -57,7 +57,7 @@ Dispatching asynchronous action give us a promise which will be resolved when th
 
 
 ```js
-
-store.dispatch(loginAction(credentials))
-
+store.dispatch(loginAction(credentials)).then((user) => {
+  console.log(user)
+})
 ```
