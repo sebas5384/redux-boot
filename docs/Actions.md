@@ -4,6 +4,8 @@ If you don't know what actions are you can read the Redux's [documentation](http
 
 There are two kinds of actions, synchronous and asynchronous:
 
+** Semicolons ";" are not actually needed, but syntax highlighting doesn't know about that ¬¬*
+
 ## Synchronous
 
 **Vanilla action:**
