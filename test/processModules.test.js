@@ -2,14 +2,16 @@ import test from 'tape'
 import {BOOT} from '../src/bootstrap'
 import processModules, {handleMiddlewares} from '../src/processModules'
 
-test('Process modules with middlewares and reducers', assert => {
+test('Process modules with middlewares, reducers and enhancers', assert => {
 
   const reducerMock = (state, action) => state
   const middlewareMock = store => next => action => next(action)
+  const enhancerMock = f => f
 
   const moduleMock = () => ({
     reducer: reducerMock,
-    middleware: middlewareMock
+    middleware: middlewareMock,
+    enhancer: enhancerMock
   })
 
   const modules = [
@@ -30,6 +32,12 @@ test('Process modules with middlewares and reducers', assert => {
     modulesProcessed.middlewares,
     [middlewareMock, middlewareMock, middlewareMock],
     'Middlewares were collected'
+  )
+
+  assert.looseEqual(
+    modulesProcessed.enhancers,
+    [enhancerMock, enhancerMock, enhancerMock],
+    'Enhancers were collected'
   )
 
   assert.end()
