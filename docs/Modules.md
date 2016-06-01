@@ -1,18 +1,22 @@
 # Modules
 
-A module is made of a reducer and/or a middleware and assumes the actions are [FSA](https://github.com/acdlite/flux-standard-action) compliant.
+A module is made of a [**reducer**](Reducers.md) and/or a [**middleware**](Middlewares.md)  which assumes the actions are [FSA](https://github.com/acdlite/flux-standard-action) compliant, and also can be implemented a [**store enhancer**](http://redux.js.org/docs/Glossary.html#store-enhancer).
 
-Its **basic signature** is the following:
+Its **signature** is the following:
 
 ```js
 const module = {
 
   reducer: (state, action) => {
-
+    return state
   },
   
   middleware: store => next => action => {
-
+    return next(action)
+  },
+  
+  enhancer: createStore => (reducer, initialState, enhancer) => {
+    return createStore(reducer, initialState, enhancer)
   }
   
 }
@@ -180,6 +184,13 @@ export default {
       return nextResult
     }
 
+  },
+  
+  enhancer: createStore => (reducer, initialState, enhancer) => {
+    // Create new store and create your enhancer here.
+    const store = createStore(reducer, initialState, enhancer)
+    
+    return store
   }
 
 }

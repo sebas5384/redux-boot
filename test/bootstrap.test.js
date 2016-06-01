@@ -140,3 +140,76 @@ test('Boostrap new app with a module implementing a middleware', assert => {
     assert.end()
   })
 })
+
+test('Boostrap new app with a module implementing an enhancer', assert => {
+  const AFTER_BOOT = 'redux-boot/test/AFTER_BOOT'
+
+  const afterBoot = value => {
+    return {
+      type: AFTER_BOOT,
+      payload: {
+        foo: value
+      }
+    }
+  }
+
+  const initialState = {
+    foo: 'bar'
+  }
+
+  const testModule = {
+
+    reducer(state, action) {
+      if (action.type === AFTER_BOOT) {
+        assert.pass('Reducer called')
+        return {
+          ...state,
+          foo: action.payload.foo
+        }
+      }
+      return state
+    },
+
+    middleware({getState, dispatch}) {
+      return next => action => {
+
+        if (action.type === BOOT) {
+          assert.pass('Middleware called')
+          dispatch(afterBoot('baz'))
+        }
+
+        return next(action)
+      }
+    },
+
+    enhancer(createStore) {
+      return (reducer, initialState, enhancer) => {
+        const store = createStore(reducer, initialState, enhancer)
+
+        const apiClient = id => 'Thing: ' + id
+
+        return {
+          ...store,
+          apiClient
+        }
+      }
+    }
+  }
+
+  const modules = [
+    testModule
+  ]
+
+  const app = boot(initialState, modules)
+
+  app.then(({action, store}) => {
+
+    assert.equal(
+      store.apiClient(2),
+      'Thing: 2',
+      "Module enhancer added an API client to the store"
+    )
+
+    assert.end()
+  })
+})
