@@ -18,8 +18,9 @@ Minimal Framework using [Redux](http://redux.js.org) to develop modularized univ
 
 ## Examples:
 
+- [Todo MVC](https://github.com/choko-org/redux-boot-todomvc) example.
 - The [bootstrap tests](https://github.com/choko-org/redux-boot/blob/master/test/bootstrap.test.js).
-- Simple [web server App](https://github.com/choko-org/redux-boot-web-app-example)
+- Simple [web server App](https://github.com/choko-org/redux-boot-web-app-example).
 
 ## Documentation
 
