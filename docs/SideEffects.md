@@ -1,6 +1,6 @@
 # Side Effects
 
-## What ?
+## What?
 
 **From Wikipedia:**
 > In computer science, a function or expression is said to have a side effect if it **modifies some state** or has an observable interaction with **calling functions or the outside world.**

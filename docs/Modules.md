@@ -1,6 +1,6 @@
 # Modules
 
-A module implements a [reducer](Reducers.md) and/or a [middleware](Middlewares.md). They should deal with a standard [Redux store](http://redux.js.org/docs/api/Store.html) and assume all actions are [FSA](https://github.com/acdlite/flux-standard-action) compliant. Modules can also implement a [store enhancer](http://redux.js.org/docs/Glossary.html#store-enhancer).
+A module implements a [reducer](Reducers.md) and/or a [middleware](Middlewares.md). They should deal with a standard [Redux's store](http://redux.js.org/docs/api/Store.html) and assume all actions are [FSA](https://github.com/acdlite/flux-standard-action) compliant. Modules can also implement a [store enhancer](http://redux.js.org/docs/Glossary.html#store-enhancer).
 
 The basic module structure is the following:
 
@@ -22,7 +22,7 @@ const module = {
 }
 ```
 
-For convenience and better code readability, the reducer can also be an object. If so, it's meant to be a [redux-actions](https://github.com/acdlite/redux-actions) action handler object. Redux Boot also provides middleware handlers which are like redux-actions action handlers but for middlewares:
+For convenience and better code readability, the reducer can also be an object. If so, it's meant to be a [redux-actions](https://github.com/acdlite/redux-actions)' action handler object. Redux Boot also provides middleware handlers which are like redux-actions action handlers but for middlewares:
 
 ```js
 import boot, {BOOT} from 'redux-boot'
