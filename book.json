@@ -1,5 +1,15 @@
 {
   "gitbook": "2.6.7",
   "title": "Redux Boot",
-  "root": "./docs"
+  "root": "./docs",
+  "plugins": ["edit-link", "prism", "-highlight", "github", "anker-enable"],
+  "pluginsConfig": {
+    "edit-link": {
+      "base": "https://github.com/reactjs/redux/tree/master",
+      "label": "Edit This Page"
+    },
+    "github": {
+      "url": "https://github.com/choko-org/redux-boot"
+    }
+  }
 }
