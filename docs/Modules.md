@@ -1,8 +1,8 @@
 # Modules
 
-A module is made of a [**reducer**](Reducers.md) and/or a [**middleware**](Middlewares.md)  which assumes the actions are [FSA](https://github.com/acdlite/flux-standard-action) compliant, and also can be implemented a [**store enhancer**](http://redux.js.org/docs/Glossary.html#store-enhancer).
+A module implements a [reducer](Reducers.md) and/or a [middleware](Middlewares.md). They should deal with a standard [Redux store](http://redux.js.org/docs/api/Store.html) and assume all actions are [FSA](https://github.com/acdlite/flux-standard-action) compliant. Modules can also implement a [store enhancer](http://redux.js.org/docs/Glossary.html#store-enhancer).
 
-Its **signature** is the following:
+The basic module structure is the following:
 
 ```js
 const module = {
@@ -21,8 +21,9 @@ const module = {
   
 }
 ```
----
-Using[ **redux-actions**](https://github.com/acdlite/redux-actions) and **middleware handlers** signature:
+
+For convenience and better code readability, the reducer can also be an object. If so, it's meant to be a [redux-actions](https://github.com/acdlite/redux-actions) action handler object. Redux Boot also provides middleware handlers which are like redux-actions action handlers but for middlewares:
+
 ```js
 import boot, {BOOT} from 'redux-boot'
 
@@ -52,16 +53,21 @@ const module = {
   }
   
 }
-
 ```
----
-Using[ **redux-actions**](https://github.com/acdlite/redux-actions) and[ **redux-promise**](https://github.com/acdlite/redux-promise) signature:
-```js
-import {BOOT} from 'redux-boot';
-import {createAction} from 'redux-actions';
-import parseRoutesFiles from './parseRoutesFiles';
 
-const LOAD_ROUTES = 'redux-boot/routes/LOAD';
+This is useful to avoid deeply nested `switch` and `if` statements that can have a bad impact in code readability and simplicity. By using objects, reducers and middlewares can respond to specific action types.
+
+
+Using[ **redux-actions**](https://github.com/acdlite/redux-actions) and[ **redux-promise**](https://github.com/acdlite/redux-promise) signature:
+
+[//]: # (Move this to advanced?)
+
+```js
+import {BOOT} from 'redux-boot'
+import {createAction} from 'redux-actions'
+import parseRoutesFiles from './parseRoutesFiles'
+
+const LOAD_ROUTES = 'redux-boot/routes/LOAD'
 const loadRoutesAction = createAction(LOAD_ROUTES, async () => {
 
   // parseRoutesFiles returns a promise, so its an async function.
@@ -118,18 +124,17 @@ const module = {
 
 }
 ```
----
-## Standard signature of a module file
 
-`@file: /modules/user/index.js`
+## Module file basic structure
+
+[//]: # (Add link to code style?)
+
 ```js
-// Notice we don't use the ";".
-
 import {BOOT} from 'redux-boot'
 import {createAction} from 'redux-actions'
 
 // Use an action constant type from other module.
-// Notice the path is relative, we assume you use Webpack.
+// Notice the path is relative, we assume we are using Webpack.
 import {SUBMIT_FORM} from 'modules/forms'
 
 // Exporting "export" an action means its public to use it outside
