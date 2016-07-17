@@ -16,7 +16,7 @@ export default function processModules(modules) {
           (state, key) => key ? ({ [key]: state }) : result, {}
         )
 
-        return { ...state, ...changes }
+        return Object.assign({}, state, changes)
       }
     })
 
