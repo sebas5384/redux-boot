@@ -29,7 +29,17 @@ export default function processModules(modules) {
     .map(module => module.enhancer)
     .filter(enhancer => typeof enhancer == 'function')
 
-  const initialStates = modules.map(module => module.initialState || {})
+  const initialStates = modules
+    .map(module => {
+      return !module.initialState ? {} : (
+        !module.selector ? module.initialState : (
+          module.selector.split('.').concat(null).reverse().reduce(
+            (state, key) => key ? ({ [key]: state }) : module.initialState, {}
+          )
+        )
+      )
+    })
+
   const initialState = initialStates.length ? Object.assign(...initialStates) : {}
 
   return {
