@@ -2,9 +2,23 @@ import {handleActions} from 'redux-actions'
 
 export default function processModules(modules) {
   const reducers = modules
-    .map(module => module.reducer)
-    .filter(reducer => typeof reducer == 'function' || typeof reducer == 'object')
-    .map(reducer => typeof reducer == 'function' ? reducer : handleActions(reducer))
+    .filter(module => (
+      typeof module.reducer == 'function' || typeof module.reducer == 'object'
+    ))
+    .map(module => {
+      const reducer = typeof module.reducer == 'function' ? module.reducer : handleActions(module.reducer)
+      const path = module.selector ? module.selector.split('.') : []
+
+      return !path.length ? reducer : (state, action) => {
+        const selection = path.reduce((state, key) => state && state[key] || {}, state)
+        const result = reducer(selection, action)
+        const changes = path.concat(null).reverse().reduce(
+          (state, key) => key ? ({ [key]: state }) : result, {}
+        )
+
+        return { ...state, ...changes }
+      }
+    })
 
   const middlewares = modules
     .map(module => module.middleware)
