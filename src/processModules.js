@@ -15,10 +15,14 @@ export default function processModules(modules) {
     .map(module => module.enhancer)
     .filter(enhancer => typeof enhancer == 'function')
 
+  const initialStates = modules.map(module => module.initialState || {})
+  const initialState = initialStates.length ? Object.assign(...initialStates) : {}
+
   return {
     reducers,
     middlewares,
     enhancers,
+    initialState,
   }
 }
 
