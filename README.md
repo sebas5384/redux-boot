@@ -186,4 +186,4 @@ npm test
 
 ## License
 
-GNU General Public License (GPL) version 3.
+[MIT](LICENSE.md)
