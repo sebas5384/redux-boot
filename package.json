@@ -13,7 +13,7 @@
     "lib": "src/lib"
   },
   "author": "",
-  "license": "GPL-3.0",
+  "license": "MIT",
   "repository": "choko-org/redux-boot",
   "dependencies": {
     "redux": "^3.3.1",
