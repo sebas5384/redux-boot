@@ -45,7 +45,8 @@ test('Boostrap new app with an initial state', assert => {
 })
 
 test('Boostrap new app with initial state on modules', assert => {
-  const testModule = { initialState: { foo: 'bar' } }
+  const initialState = { foo: 'bar' }
+  const testModule = { initialState: (state) => initialState }
 
   const app = boot(null, [testModule])
 
@@ -53,7 +54,7 @@ test('Boostrap new app with initial state on modules', assert => {
 
     assert.deepEqual(
       store.getState(),
-      testModule.initialState,
+      initialState,
       'State is equal to module\'s initial state'
     )
 
