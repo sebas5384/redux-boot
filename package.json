@@ -2,9 +2,11 @@
   "name": "redux-boot",
   "version": "1.1.1",
   "description": "Minimal Framework using Redux to develop modularized universal.",
-  "main": "build/index.js",
+  "main": "lib/index.js",
   "scripts": {
-    "build": "rm -f build/index.js* && webpack",
+    "build": "npm run build-es && npm run build-umd",
+    "build-es": "rm -Rf lib && BABEL_ENV=es babel ./src -d lib",
+    "build-umd": "rm -f build/index.js* && webpack",
     "pretest": "rm -f build/test.js* && webpack --config ./webpack.config.test.js",
     "test": "tape build/test.js | tap-spec",
     "prepublish": "npm run build"
