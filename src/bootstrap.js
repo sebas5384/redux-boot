@@ -4,10 +4,10 @@ import configureStore from './configureStore'
 
 export const BOOT = 'redux-boot/BOOT'
 
-export default function boot(state = {}, modules = []) {
-  const {reducers, middlewares, enhancers, initialState} = processModules(modules)
+export default function boot(initialState = {}, modules = []) {
+  const {reducers, middlewares, enhancers, initialState: modulesInitialState} = processModules(modules)
 
-  state = {...initialState, ...state}
+  const state = {...initialState, ...modulesInitialState}
 
   let store = configureStore(state, reducers, middlewares, enhancers)
 
